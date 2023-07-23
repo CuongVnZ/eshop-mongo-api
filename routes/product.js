@@ -8,7 +8,6 @@ const {
 const router = require("express").Router();
 
 //CREATE
-
 router.post("/", verifyTokenAndAdmin, async (req, res) => {
   const newProduct = new Product(req.body);
 
@@ -18,6 +17,21 @@ router.post("/", verifyTokenAndAdmin, async (req, res) => {
   } catch (err) {
     res.status(500).json(err);
   }
+});
+
+//MULTIPLE CREATE
+router.post("/multi/", verifyTokenAndAdmin, async (req, res) => {
+  const products = req.body;
+  products.forEach(async (product) => {
+    const newProduct = new Product(product);
+    try {
+      await newProduct.save();
+    }
+    catch (err) {
+      return res.status(500).json(err);
+    }
+  });
+  return res.status(200).json("All products have been saved");
 });
 
 //UPDATE
