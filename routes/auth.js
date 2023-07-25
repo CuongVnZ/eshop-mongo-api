@@ -12,6 +12,8 @@ router.post("/register", async (req, res) => {
       req.body.password,
       process.env.PASS_SEC
     ).toString(),
+    shippingAddress: req.body.shippingAddress,
+    phone: req.body.phone,
   });
 
   try {
