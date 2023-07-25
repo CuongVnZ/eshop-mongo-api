@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const OrderSchema = new mongoose.Schema(
   {
     uid: { type: String, required: true },
-    products: [
+    items: [
       {
         productId: {
           type: String,
@@ -12,11 +12,16 @@ const OrderSchema = new mongoose.Schema(
           type: Number,
           default: 1,
         },
+        price: {
+          type: Number,
+          default: 0,
+        },
       },
     ],
-    amount: { type: Number, required: true },
+    shipping: { type: Number, required: true },
     address: { type: Object, required: true },
-    status: { type: String, default: "pending" },
+    note: { type: String, default: "" },
+    status: { type: String, default: "Pending" },
   },
   { timestamps: true }
 );
