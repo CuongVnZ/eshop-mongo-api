@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const OrderSchema = new mongoose.Schema(
   {
-    uid: { type: String, required: true },
+    customerId: { type: String, required: true },
     items: [
       {
         productId: {
@@ -18,6 +18,7 @@ const OrderSchema = new mongoose.Schema(
         },
       },
     ],
+    total: { type: Number, required: true },
     shipping: { type: Number, required: true },
     address: { type: Object, required: true },
     note: { type: String, default: "" },
