@@ -56,9 +56,9 @@ router.delete("/:id", verifyTokenAndAdmin, async (req, res) => {
 });
 
 //GET USER ORDERS
-router.get("/find/:uid", verifyTokenAndAuthorization, async (req, res) => {
+router.get("/find/:id", verifyTokenAndAuthorization, async (req, res) => {
   try {
-    const orders = await Order.find({ customerId: req.params.uid });
+    const orders = await Order.find({ customerId: req.params.id });
     res.status(200).json(orders);
   } catch (err) {
     res.status(500).json(err);
@@ -66,9 +66,9 @@ router.get("/find/:uid", verifyTokenAndAuthorization, async (req, res) => {
 });
 
 //GET USER ORDER
-router.get("/find/:uid/:oid", verifyTokenAndAuthorization, async (req, res) => {
+router.get("/find/:id/:oid", verifyTokenAndAuthorization, async (req, res) => {
   try {
-    const orders = await Order.find({ customerId: req.params.uid });
+    const orders = await Order.find({ customerId: req.params.id });
     const order = orders.find((order) => order._id.toString() === req.params.oid);
 
     res.status(200).json(order);
