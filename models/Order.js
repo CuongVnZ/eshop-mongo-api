@@ -18,10 +18,11 @@ const OrderSchema = new mongoose.Schema(
         },
       },
     ],
-    total: { type: Number, required: true },
     shipping: { type: Number, required: true },
-    address: { type: Object, required: true },
+    shippingAddress: { type: Object, required: true },
     note: { type: String, default: "" },
+    paymentMethod: { type: String, required: true },
+    total: { type: Number, required: true },
     status: { type: String, default: "Pending" },
   },
   { timestamps: true }
