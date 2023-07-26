@@ -5,7 +5,7 @@ const OrderSchema = new mongoose.Schema(
     customerId: { type: String, required: true },
     items: [
       {
-        productId: {
+        pid: {
           type: String,
         },
         quantity: {
