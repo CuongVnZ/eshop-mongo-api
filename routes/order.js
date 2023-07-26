@@ -19,6 +19,16 @@ router.post("/", verifyToken, async (req, res) => {
   }
 });
 
+//GET 
+router.get("/:id", verifyTokenAndAdmin, async (req, res) => {
+  try {
+    const order = await Order.findById(req.params.id);
+    res.status(200).json(order);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 //UPDATE
 router.put("/:id", verifyTokenAndAdmin, async (req, res) => {
   try {
