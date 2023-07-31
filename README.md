@@ -1,5 +1,5 @@
-# ilc-api
-### API SERVER FOR ilc-client
+# eshop-mongo-api
+### API SERVER FOR E-COMMERCE WEBSITE
 
 
 
