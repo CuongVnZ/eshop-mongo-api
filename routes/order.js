@@ -20,7 +20,7 @@ router.post("/", verifyToken, async (req, res) => {
 });
 
 //GET 
-router.get("/", verifyTokenAndAdmin, async (req, res) => {
+router.get("/findById/:id", verifyTokenAndAdmin, async (req, res) => {
   try {
     const order = await Order.findById(req.params.id);
     res.status(200).json(order);
@@ -77,7 +77,7 @@ router.get("/find/:id/:oid", verifyTokenAndAuthorization, async (req, res) => {
   }
 });
 
-// //GET ALL
+//GET ALL
 router.get("/", verifyTokenAndAdmin, async (req, res) => {
   try {
     const orders = await Order.find();
@@ -88,7 +88,6 @@ router.get("/", verifyTokenAndAdmin, async (req, res) => {
 });
 
 // GET MONTHLY INCOME
-
 router.get("/income", verifyTokenAndAdmin, async (req, res) => {
   const productId = req.query.pid;
   const date = new Date();
@@ -100,15 +99,33 @@ router.get("/income", verifyTokenAndAdmin, async (req, res) => {
       {
         $match: {
           createdAt: { $gte: previousMonth },
+          // scheme:
+          // items: [
+          //   {
+          //     pid: {
+          //       type: String,
+          //     },
+          //     quantity: {
+          //       type: Number,
+          //       default: 1,
+          //     },
+          //     price: {
+          //       type: Number,
+          //       default: 0,
+          //     },
+          //   },
+          // ],
           ...(productId && {
-            products: { $elemMatch: { productId } },
+            "items.pid": { 
+              $in: [productId],
+            }
           }),
         },
       },
       {
         $project: {
           month: { $month: "$createdAt" },
-          sales: "$amount",
+          sales: "$total",
         },
       },
       {
