@@ -13,6 +13,14 @@ import stripeRoute from "./routes/stripe";
 dotenv.config();
 
 const app: Application = express();
+app.use(cors());
+app.use(express.json());
+app.use("/api/auth", authRoute);
+app.use("/api/users", userRoute);
+app.use("/api/products", productRoute);
+app.use("/api/carts", cartRoute);
+app.use("/api/orders", orderRoute);
+app.use("/api/checkout", stripeRoute);
 
 async function connectDB() {
   return await mongoose
@@ -26,16 +34,6 @@ async function connectDB() {
 connectDB()
 .then(() => {
   const port = process.env.PORT || 5000;
-
-  app.use(cors());
-  app.use(express.json());
-  app.use("/api/auth", authRoute);
-  app.use("/api/users", userRoute);
-  app.use("/api/products", productRoute);
-  app.use("/api/carts", cartRoute);
-  app.use("/api/orders", orderRoute);
-  app.use("/api/checkout", stripeRoute);
-
   app.listen(port, () => {
     console.log("Backend server is running on port " + port + "!");
   });
