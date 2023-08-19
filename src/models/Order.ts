@@ -1,6 +1,25 @@
-const mongoose = require("mongoose");
+import mongoose, { Document, Schema } from "mongoose";
 
-const OrderSchema = new mongoose.Schema(
+interface Item {
+  pid: string;
+  quantity?: number;
+  price?: number;
+}
+
+interface Order extends Document {
+  customerId: string;
+  items: Item[];
+  shipping: number;
+  shippingAddress: object;
+  note?: string;
+  paymentMethod: string;
+  total: number;
+  status?: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+const OrderSchema: Schema<Order> = new Schema(
   {
     customerId: { type: String, required: true },
     items: [
@@ -28,4 +47,4 @@ const OrderSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model("Order", OrderSchema);
+export default mongoose.model<Order>("Order", OrderSchema);

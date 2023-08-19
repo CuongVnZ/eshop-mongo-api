@@ -1,14 +1,15 @@
-const Cart = require("../models/Cart");
-const {
+import { Router, Request, Response } from "express";
+import Cart from "../models/Cart";
+import {
   verifyToken,
   verifyTokenAndAuthorization,
   verifyTokenAndAdmin,
-} = require("./verifyToken");
+} from "./verifyToken";
 
-const router = require("express").Router();
+const router: Router = Router();
 
 //CREATE
-router.post("/", verifyToken, async (req, res) => {
+router.post("/", verifyToken, async (req: Request, res: Response) => {
   const newCart = new Cart(req.body);
 
   try {
@@ -20,7 +21,7 @@ router.post("/", verifyToken, async (req, res) => {
 });
 
 //UPDATE
-router.put("/:id", verifyTokenAndAuthorization, async (req, res) => {
+router.put("/:id", verifyTokenAndAuthorization, async (req: Request, res: Response) => {
   try {
     const updatedCart = await Cart.findByIdAndUpdate(
       req.params.id,
@@ -36,7 +37,7 @@ router.put("/:id", verifyTokenAndAuthorization, async (req, res) => {
 });
 
 //DELETE
-router.delete("/:id", verifyTokenAndAuthorization, async (req, res) => {
+router.delete("/:id", verifyTokenAndAuthorization, async (req: Request, res: Response) => {
   try {
     await Cart.findByIdAndDelete(req.params.id);
     res.status(200).json("Cart has been deleted...");
@@ -46,7 +47,7 @@ router.delete("/:id", verifyTokenAndAuthorization, async (req, res) => {
 });
 
 //GET USER CART
-router.get("/find/:userId", verifyTokenAndAuthorization, async (req, res) => {
+router.get("/find/:userId", verifyTokenAndAuthorization, async (req: Request, res: Response) => {
   try {
     const cart = await Cart.findOne({ userId: req.params.userId });
     res.status(200).json(cart);
@@ -56,7 +57,7 @@ router.get("/find/:userId", verifyTokenAndAuthorization, async (req, res) => {
 });
 
 //GET ALL
-router.get("/", verifyTokenAndAdmin, async (req, res) => {
+router.get("/", verifyTokenAndAdmin, async (req: Request, res: Response) => {
   try {
     const carts = await Cart.find();
     res.status(200).json(carts);
@@ -65,4 +66,4 @@ router.get("/", verifyTokenAndAdmin, async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;

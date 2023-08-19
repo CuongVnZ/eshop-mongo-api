@@ -1,14 +1,14 @@
 # eshop-mongo-api
-### API SERVER FOR E-COMMERCE WEBSITE
+### TYPESCRIPT API BACKEND SERVER
 
 
 
 To install required modules :
 ```command line
-npm install
+yarn
 ```
 
 Start the server :
 ```command line
-npm start
+yarn run dev
 ```

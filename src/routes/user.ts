@@ -1,18 +1,20 @@
-const User = require("../models/User");
-const {
+import { Router, Request, Response } from "express";
+import User, { IUser } from "../models/User";
+import {
   verifyToken,
   verifyTokenAndAuthorization,
   verifyTokenAndAdmin,
-} = require("./verifyToken");
+} from "./verifyToken";
+import CryptoJS from "crypto-js";
 
-const router = require("express").Router();
+const router: Router = Router();
 
-//UPDATE
-router.put("/:id", verifyTokenAndAuthorization, async (req, res) => {
+// UPDATE
+router.put("/:id", verifyTokenAndAuthorization, async (req: Request, res: Response) => {
   if (req.body.password) {
     req.body.password = CryptoJS.AES.encrypt(
       req.body.password,
-      process.env.PASS_SEC
+      process.env.PASS_SEC || ""
     ).toString();
   }
 
@@ -30,8 +32,8 @@ router.put("/:id", verifyTokenAndAuthorization, async (req, res) => {
   }
 });
 
-//DELETE
-router.delete("/:id", verifyTokenAndAuthorization, async (req, res) => {
+// DELETE
+router.delete("/:id", verifyTokenAndAuthorization, async (req: Request, res: Response) => {
   try {
     await User.findByIdAndDelete(req.params.id);
     res.status(200).json("User has been deleted...");
@@ -40,19 +42,19 @@ router.delete("/:id", verifyTokenAndAuthorization, async (req, res) => {
   }
 });
 
-//GET USER
-router.get("/find/:id", verifyTokenAndAdmin, async (req, res) => {
+// GET USER
+router.get("/find/:id", verifyTokenAndAdmin, async (req: Request, res: Response) => {
   try {
     const user = await User.findById(req.params.id);
-    const { password, ...others } = user._doc;
+    const { password, ...others } = user?.toObject() as IUser;
     res.status(200).json(others);
   } catch (err) {
     res.status(500).json(err);
   }
 });
 
-//GET ALL USER
-router.get("/", verifyTokenAndAdmin, async (req, res) => {
+// GET ALL USER
+router.get("/", verifyTokenAndAdmin, async (req: Request, res: Response) => {
   const query = req.query.new;
   try {
     const users = query
@@ -64,8 +66,8 @@ router.get("/", verifyTokenAndAdmin, async (req, res) => {
   }
 });
 
-//GET USER STATS
-router.get("/stats", verifyTokenAndAdmin, async (req, res) => {
+// GET USER STATS
+router.get("/stats", verifyTokenAndAdmin, async (req: Request, res: Response) => {
   const date = new Date();
   const lastYear = new Date(date.setFullYear(date.getFullYear() - 1));
 
@@ -84,10 +86,10 @@ router.get("/stats", verifyTokenAndAdmin, async (req, res) => {
         },
       },
     ]);
-    res.status(200).json(data)
+    res.status(200).json(data);
   } catch (err) {
     res.status(500).json(err);
   }
 });
 
-module.exports = router;
+export default router;

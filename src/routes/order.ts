@@ -1,14 +1,15 @@
-const Order = require("../models/Order");
-const {
+import { Router, Request, Response } from "express";
+import Order from "../models/Order";
+import {
   verifyToken,
   verifyTokenAndAuthorization,
   verifyTokenAndAdmin,
-} = require("./verifyToken");
+} from "./verifyToken";
 
-const router = require("express").Router();
+const router: Router = Router();
 
 //CREATE
-router.post("/", verifyToken, async (req, res) => {
+router.post("/", verifyToken, async (req: Request, res: Response) => {
   const newOrder = new Order(req.body);
 
   try {
@@ -19,8 +20,8 @@ router.post("/", verifyToken, async (req, res) => {
   }
 });
 
-//GET 
-router.get("/findById/:id", verifyTokenAndAdmin, async (req, res) => {
+//GET
+router.get("/findById/:id", verifyTokenAndAdmin, async (req: Request, res: Response) => {
   try {
     const order = await Order.findById(req.params.id);
     res.status(200).json(order);
@@ -30,7 +31,7 @@ router.get("/findById/:id", verifyTokenAndAdmin, async (req, res) => {
 });
 
 //UPDATE
-router.put("/:id", verifyTokenAndAdmin, async (req, res) => {
+router.put("/:id", verifyTokenAndAdmin, async (req: Request, res: Response) => {
   try {
     const updatedOrder = await Order.findByIdAndUpdate(
       req.params.id,
@@ -46,7 +47,7 @@ router.put("/:id", verifyTokenAndAdmin, async (req, res) => {
 });
 
 //DELETE
-router.delete("/:id", verifyTokenAndAdmin, async (req, res) => {
+router.delete("/:id", verifyTokenAndAdmin, async (req: Request, res: Response) => {
   try {
     await Order.findByIdAndDelete(req.params.id);
     res.status(200).json("Order has been deleted...");
@@ -56,7 +57,7 @@ router.delete("/:id", verifyTokenAndAdmin, async (req, res) => {
 });
 
 //GET USER ORDERS
-router.get("/find/:id", verifyTokenAndAuthorization, async (req, res) => {
+router.get("/find/:id", verifyTokenAndAuthorization, async (req: Request, res: Response) => {
   try {
     const orders = await Order.find({ customerId: req.params.id });
     res.status(200).json(orders);
@@ -66,7 +67,7 @@ router.get("/find/:id", verifyTokenAndAuthorization, async (req, res) => {
 });
 
 //GET USER ORDER
-router.get("/find/:id/:oid", verifyTokenAndAuthorization, async (req, res) => {
+router.get("/find/:id/:oid", verifyTokenAndAuthorization, async (req: Request, res: Response) => {
   try {
     const orders = await Order.find({ customerId: req.params.id });
     const order = orders.find((order) => order._id.toString() === req.params.oid);
@@ -78,7 +79,7 @@ router.get("/find/:id/:oid", verifyTokenAndAuthorization, async (req, res) => {
 });
 
 //GET ALL
-router.get("/", verifyTokenAndAdmin, async (req, res) => {
+router.get("/", verifyTokenAndAdmin, async (req: Request, res: Response) => {
   try {
     const orders = await Order.find();
     res.status(200).json(orders);
@@ -88,7 +89,7 @@ router.get("/", verifyTokenAndAdmin, async (req, res) => {
 });
 
 // GET MONTHLY INCOME
-router.get("/income", verifyTokenAndAdmin, async (req, res) => {
+router.get("/income", verifyTokenAndAdmin, async (req: Request, res: Response) => {
   const productId = req.query.pid;
   const date = new Date();
   const lastMonth = new Date(date.setMonth(date.getMonth() - 1));
@@ -99,26 +100,10 @@ router.get("/income", verifyTokenAndAdmin, async (req, res) => {
       {
         $match: {
           createdAt: { $gte: previousMonth },
-          // scheme:
-          // items: [
-          //   {
-          //     pid: {
-          //       type: String,
-          //     },
-          //     quantity: {
-          //       type: Number,
-          //       default: 1,
-          //     },
-          //     price: {
-          //       type: Number,
-          //       default: 0,
-          //     },
-          //   },
-          // ],
           ...(productId && {
-            "items.pid": { 
+            "items.pid": {
               $in: [productId],
-            }
+            },
           }),
         },
       },
@@ -141,4 +126,4 @@ router.get("/income", verifyTokenAndAdmin, async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;
