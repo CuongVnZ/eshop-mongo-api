@@ -95,4 +95,14 @@ router.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         res.status(500).json(err);
     }
 }));
+//GET ALL CATEGORY
+router.get("/categories", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const categories = yield Product_1.default.find().distinct("category");
+        res.status(200).json(categories);
+    }
+    catch (err) {
+        res.status(500).json(err);
+    }
+}));
 exports.default = router;

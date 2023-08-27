@@ -92,4 +92,14 @@ router.get("/", async (req: Request, res: Response) => {
   }
 });
 
+//GET ALL CATEGORY
+router.get("/categories", async (req: Request, res: Response) => {
+  try {
+    const categories = await Product.find().distinct("category");
+    res.status(200).json(categories);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 export default router;
