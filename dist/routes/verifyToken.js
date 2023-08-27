@@ -11,7 +11,7 @@ const verifyToken = (req, res, next) => {
         const token = authHeader.split(" ")[1];
         jsonwebtoken_1.default.verify(token, process.env.JWT_SEC, (err, user) => {
             if (err) {
-                res.status(403).json("Invalid or expired token.");
+                res.status(404).json("Invalid or expired token.");
             }
             req.body.user = user;
             next();

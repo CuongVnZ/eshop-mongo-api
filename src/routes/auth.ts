@@ -66,7 +66,7 @@ router.post("/login", async (req: Request, res: Response) => {
 });
 
 // Just a test token route
-router.get("/test", verifyTokenAndAuthorization, async (req: Request, res: Response) => {
+router.get("/test/:id", verifyTokenAndAuthorization, async (req: Request, res: Response) => {
   return res.status(200).json("Valid token.");
 });
 

@@ -7,7 +7,7 @@ const verifyToken = (req: Request, res: Response, next: NextFunction) => {
     const token = (authHeader as string).split(" ")[1];
     jwt.verify(token, process.env.JWT_SEC as string, (err: any, user: any) => {
       if (err) {
-        res.status(403).json("Invalid or expired token.");
+        res.status(404).json("Invalid or expired token.");
       }
       req.body.user = user;
       next();
