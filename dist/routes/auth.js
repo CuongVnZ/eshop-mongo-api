@@ -37,7 +37,7 @@ router.post("/register", (req, res) => __awaiter(void 0, void 0, void 0, functio
         password: crypto_js_1.default.AES.encrypt(req.body.password, process.env.PASS_SEC).toString(),
         shippingAddress: req.body.shippingAddress,
         phone: req.body.phone,
-        name: req.body.name,
+        fullname: req.body.fullname,
     });
     try {
         const savedUser = yield newUser.save();
