@@ -17,7 +17,7 @@ router.post("/register", async (req: Request, res: Response) => {
     ).toString(),
     shippingAddress: req.body.shippingAddress,
     phone: req.body.phone,
-    name: req.body.name,
+    fullname: req.body.fullname,
   });
 
   try {
