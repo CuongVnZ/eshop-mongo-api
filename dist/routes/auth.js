@@ -73,7 +73,7 @@ router.post("/login", (req, res) => __awaiter(void 0, void 0, void 0, function* 
     }
 }));
 // Just a test token route
-router.get("/test/:id", verifyToken_1.verifyTokenAndAuthorization, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.get("/test/:id", verifyToken_1.verifyToken, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     return res.status(200).json("Valid token.");
 }));
 exports.default = router;

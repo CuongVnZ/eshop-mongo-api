@@ -2,7 +2,7 @@ import { Router, Request, Response } from "express";
 import User from "../models/User";
 import CryptoJS from "crypto-js";
 import jwt from "jsonwebtoken";
-import { verifyTokenAndAuthorization } from "./verifyToken";
+import { verifyToken } from "./verifyToken";
 
 const router: Router = Router();
 
@@ -66,7 +66,7 @@ router.post("/login", async (req: Request, res: Response) => {
 });
 
 // Just a test token route
-router.get("/test/:id", verifyTokenAndAuthorization, async (req: Request, res: Response) => {
+router.get("/test/:id", verifyToken, async (req: Request, res: Response) => {
   return res.status(200).json("Valid token.");
 });
 
