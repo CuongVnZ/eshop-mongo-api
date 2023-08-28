@@ -6,7 +6,8 @@ interface Product extends Document {
   desc: string;
   img: string;
   category?: string;
-  size?: string[];
+  types?: string[];
+  options?: string[];
   price: number;
   inStock?: boolean;
   createdAt: Date;
@@ -20,7 +21,8 @@ const ProductSchema: Schema<Product> = new Schema(
     desc: { type: String, required: true },
     img: { type: String, required: true },
     category: { type: String },
-    size: { type: [String] },
+    types: { type: [String] },
+    options: { type: [String] },
     price: { type: Number, required: true },
     inStock: { type: Boolean, default: true },
   },
