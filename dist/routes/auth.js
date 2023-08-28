@@ -74,6 +74,11 @@ router.post("/login", (req, res) => __awaiter(void 0, void 0, void 0, function* 
 }));
 // Just a test token route
 router.get("/test", verifyToken_1.verifyToken, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    return res.status(200).json("Valid token.");
+    try {
+        return res.status(200).json("Valid token.");
+    }
+    catch (err) {
+        return res.status(500).json(err);
+    }
 }));
 exports.default = router;
