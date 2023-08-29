@@ -5,14 +5,14 @@ interface Product {
   quantity?: number;
 }
 
-interface Cart extends Document {
+interface ICart extends Document {
   uid: string;
   products: Product[];
   createdAt: Date;
   updatedAt: Date;
 }
 
-const CartSchema: Schema<Cart> = new Schema(
+const CartSchema: Schema<ICart> = new Schema(
   {
     uid: { type: String, required: true },
     products: [
@@ -30,4 +30,4 @@ const CartSchema: Schema<Cart> = new Schema(
   { timestamps: true }
 );
 
-export default mongoose.model<Cart>("Cart", CartSchema);
+export default mongoose.model<ICart>("Cart", CartSchema);

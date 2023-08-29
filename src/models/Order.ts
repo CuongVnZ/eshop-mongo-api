@@ -6,7 +6,7 @@ interface Item {
   price?: number;
 }
 
-interface Order extends Document {
+interface IOrder extends Document {
   customerId: string;
   items: Item[];
   shipping: number;
@@ -19,7 +19,7 @@ interface Order extends Document {
   updatedAt: Date;
 }
 
-const OrderSchema: Schema<Order> = new Schema(
+const OrderSchema: Schema<IOrder> = new Schema(
   {
     customerId: { type: String, required: true },
     items: [
@@ -47,4 +47,4 @@ const OrderSchema: Schema<Order> = new Schema(
   { timestamps: true }
 );
 
-export default mongoose.model<Order>("Order", OrderSchema);
+export default mongoose.model<IOrder>("Order", OrderSchema);
