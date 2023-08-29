@@ -30,8 +30,8 @@ const ProductSchema = new mongoose_1.Schema({
     desc: { type: String, required: true },
     img: { type: String, required: true },
     category: { type: String },
-    types: [{ name: String, price: Number }],
-    options: [{ name: String, price: Number }],
+    types: [{ name: String, mode: String, price: Number }],
+    options: [{ name: String, mode: String, price: Number }],
     price: { type: Number, required: true },
     inStock: { type: Boolean, default: true },
 }, { timestamps: true });

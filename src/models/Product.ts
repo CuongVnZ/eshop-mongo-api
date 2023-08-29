@@ -2,6 +2,7 @@ import mongoose, { Document, Schema } from "mongoose";
 
 interface IOption extends Document {
   name: string;
+  mode: string;
   price: number;
 }
 
@@ -26,8 +27,8 @@ const ProductSchema: Schema<IProduct> = new Schema(
     desc: { type: String, required: true },
     img: { type: String, required: true },
     category: { type: String },
-    types: [ { name: String, price: Number } ],
-    options: [ { name: String, price: Number } ],
+    types: [ { name: String, mode: String, price: Number } ],
+    options: [ { name: String, mode: String, price: Number } ],
     price: { type: Number, required: true },
     inStock: { type: Boolean, default: true },
   },
