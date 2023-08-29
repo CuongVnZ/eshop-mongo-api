@@ -1,6 +1,7 @@
 import mongoose, { Document, Schema } from "mongoose";
 
 interface IOption extends Document {
+  _id: false,
   name: string;
   mode: string;
   price: number;
