@@ -73,13 +73,16 @@ router.get("/find/:id", (req, res) => __awaiter(void 0, void 0, void 0, function
 //GET ALL PRODUCTS
 router.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const qNew = req.query.new;
-    const qCategory = req.query.category;
+    let qCategory = req.query.category;
     try {
         let products;
         if (qNew) {
             products = yield Product_1.default.find().sort({ createdAt: -1 }).limit(1);
         }
         else if (qCategory) {
+            // captilize the first letter of the category
+            qCategory = qCategory.toString();
+            qCategory = qCategory.charAt(0).toUpperCase() + qCategory.slice(1);
             products = yield Product_1.default.find({
                 // categories: {
                 //   $in: [qCategory],
