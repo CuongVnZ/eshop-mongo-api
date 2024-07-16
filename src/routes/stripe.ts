@@ -18,7 +18,7 @@ router.post("/payment", (req: Request, res: Response) => {
   })
   .then(invoiceItem => {
     return stripe.invoices.create({
-      collection_method: "send_invoice",
+      // collection_method: "send_invoice",
       customer: invoiceItem.customer as string
     });
   })
