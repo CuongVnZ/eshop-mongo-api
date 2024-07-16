@@ -1,8 +1,6 @@
 # eshop-mongo-api
 ### TYPESCRIPT API BACKEND SERVER
 
-
-
 To install required modules :
 ```command line
 yarn
