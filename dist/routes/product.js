@@ -82,7 +82,8 @@ router.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         else if (qCategory) {
             products = yield Product_1.default.find({
                 categories: {
-                    $in: [qCategory],
+                    // $in: [qCategory],
+                    $eq: qCategory,
                 },
             });
         }

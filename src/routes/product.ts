@@ -79,7 +79,8 @@ router.get("/", async (req: Request, res: Response) => {
     } else if (qCategory) {
       products = await Product.find({
         categories: {
-          $in: [qCategory],
+          // $in: [qCategory],
+          $eq: qCategory,
         },
       });
     } else {
